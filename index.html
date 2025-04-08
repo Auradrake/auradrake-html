@@ -27,6 +27,17 @@
       margin: 0;
       text-align: center;
       padding: 40px 20px;
+.section, .video-block, .reviews, .bio, .cta, .social, .subscribe-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.section.visible, .video-block.visible, .reviews.visible, .bio.visible, .cta.visible, .social.visible, .subscribe-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
     }
     h1 {
       font-size: 3em;
@@ -173,6 +184,18 @@
   <footer>
     &copy; AURADRAKE, 2025. Тьма активирована.
   </footer>
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
 
+  document.querySelectorAll('.section, .video-block, .reviews, .bio, .cta, .social, .subscribe-section')
+    .forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
